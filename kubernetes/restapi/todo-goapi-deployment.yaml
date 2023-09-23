@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: todo-goapi
+  name: todo-goapi
+  namespace: restapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-goapi
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: todo-goapi
+    spec:
+      containers:
+        - image: zanamira43/todo-go-fiber-api:1.0
+          name: todo-goapi-pod
+          imagePullPolicy: IfNotPresent  
+          ports:
+            - containerPort: 3000
+          resources: {}
+          env:
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: todo-goapi-configmap
+                key: host
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: todo-goapi-configmap
+                key: dbname
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-password
+                key: rootpassword
+
+
+status: {}

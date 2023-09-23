@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-goapi-configmap
+  namespace: restapi
+data:
+  host: mysql-service.database
+  dbname: todoApp
+  
+
+
